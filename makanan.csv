@@ -1,0 +1,117 @@
+name,category,serving_label,serving_grams,kcal_per_serving
+nasi putih,makanan pokok,1 piring,150,195
+nasi merah,makanan pokok,1 piring,150,165
+nasi uduk,makanan pokok,1 piring,200,350
+nasi kuning,makanan pokok,1 piring,200,300
+nasi goreng,makanan pokok,1 piring,250,350
+nasi liwet,makanan pokok,1 piring,200,280
+lontong sayur,makanan pokok,1 mangkuk,250,350
+bubur ayam,makanan pokok,1 mangkuk,250,300
+mie goreng,makanan pokok,1 porsi,200,320
+mie kuah,makanan pokok,1 porsi,200,280
+mie instan,makanan pokok,1 bungkus,85,380
+bihun goreng,makanan pokok,1 porsi,150,250
+kwetiau goreng,makanan pokok,1 porsi,200,330
+lontong,makanan pokok,1 buah,100,130
+ketupat,makanan pokok,1 potong,100,160
+kentang rebus,makanan pokok,2 buah sedang,150,130
+kentang goreng,makanan pokok,1 porsi,100,312
+ubi jalar rebus,makanan pokok,1 buah sedang,130,115
+singkong rebus,makanan pokok,2 potong,150,150
+makaroni schotel,makanan pokok,1 potong,100,210
+ayam goreng,lauk hewani,1 potong,60,160
+ayam bakar,lauk hewani,1 potong,80,180
+ayam opor,lauk hewani,1 potong,100,220
+ayam geprek,lauk hewani,1 potong dada/paha,120,290
+ayam teriyaki,lauk hewani,1 porsi,100,210
+rendang sapi,lauk hewani,1 potong,50,150
+sate ayam,lauk hewani,5 tusuk,100,250
+sate kambing,lauk hewani,5 tusuk,100,280
+gulai sapi,lauk hewani,1 mangkuk kecil,100,240
+empal gentong,lauk hewani,1 mangkuk,150,220
+ikan goreng,lauk hewani,1 potong,75,180
+ikan bakar,lauk hewani,1 potong,100,170
+ikan pindang,lauk hewani,1 ekor sedang,70,110
+pecel lele,lauk hewani,1 ekor,100,200
+lele goreng,lauk hewani,1 ekor,90,195
+telur rebus,lauk hewani,1 butir,55,78
+telur dadar,lauk hewani,1 porsi,60,120
+telur ceplok,lauk hewani,1 butir,50,90
+telur balado,lauk hewani,1 butir,70,135
+udang goreng,lauk hewani,5 ekor,75,140
+cumi asam manis,lauk hewani,1 porsi,100,180
+bakso sapi,lauk hewani,5 butir,100,200
+sosis sapi goreng,lauk hewani,2 buah,60,180
+nugget ayam,lauk hewani,4 buah,60,160
+tempe goreng,lauk nabati,2 potong,50,150
+tempe bacem,lauk nabati,2 potong,60,130
+tahu goreng,lauk nabati,2 potong,80,150
+tahu isi,lauk nabati,1 buah,70,120
+tahu bacem,lauk nabati,2 potong,60,110
+perkedel tahu,lauk nabati,2 buah,80,140
+oncom goreng,lauk nabati,1 potong,50,110
+tempe orek,lauk nabati,1 porsi,75,180
+pepes tahu,lauk nabati,1 bungkus,100,120
+perkedel kentang,lauk nabati,2 buah,60,125
+sayur asem,sayur,1 mangkuk,150,80
+sayur lodeh,sayur,1 mangkuk,150,120
+capcay,sayur,1 porsi,200,150
+tumis kangkung,sayur,1 porsi,100,90
+tumis bayam,sayur,1 mangkuk,100,65
+urap sayur,sayur,1 porsi,100,130
+sop sayur,sayur,1 mangkuk,200,100
+sop buncis wortel,sayur,1 mangkuk,150,75
+pecel sayur,sayur,1 porsi,200,250
+gado-gado,sayur,1 porsi,250,300
+karedok,sayur,1 porsi,200,200
+sayur bayam,sayur,1 mangkuk,150,60
+lalapan mentimun kol,sayur,1 porsi,50,20
+pisang,buah,1 buah,100,90
+apel,buah,1 buah,150,78
+jeruk,buah,1 buah,130,62
+pepaya,buah,1 potong,150,60
+mangga,buah,1 buah,200,135
+semangka,buah,1 potong,200,60
+alpukat,buah,1 buah,150,240
+melon,buah,1 potong,150,50
+jambu biji,buah,1 buah,150,100
+nanas,buah,1 potong,100,50
+anggur,buah,10 buah,100,70
+pir,buah,1 buah,150,85
+stroberi,buah,5 buah,100,32
+air putih,minuman,1 gelas,250,0.1
+teh manis,minuman,1 gelas,200,90
+teh tawar,minuman,1 gelas,200,2
+kopi hitam,minuman,1 cangkir,200,5
+kopi susu,minuman,1 cangkir,200,120
+susu sapi,minuman,1 gelas,200,122
+jus jeruk,minuman,1 gelas,250,110
+jus alpukat,minuman,1 gelas,250,280
+jus mangga,minuman,1 gelas,250,180
+es teh,minuman,1 gelas,250,100
+es jeruk,minuman,1 gelas,250,110
+wedang jahe,minuman,1 gelas,200,80
+es kelapa muda,minuman,1 gelas,250,120
+susu kedelai,minuman,1 gelas,200,100
+boba milk tea,minuman,1 gelas,300,350
+roti tawar,camilan,2 lembar,60,160
+roti bakar,camilan,1 porsi,100,250
+martabak manis,camilan,1 potong,80,250
+martabak telur,camilan,1 potong,70,190
+risoles,camilan,1 buah,60,150
+lemper,camilan,1 buah,75,180
+klepon,camilan,3 buah,60,150
+onde-onde,camilan,1 buah,50,140
+pastel,camilan,1 buah,60,135
+lumpia goreng,camilan,1 buah,60,140
+keripik singkong,camilan,1 bungkus kecil,30,150
+kerupuk udang,camilan,5 buah,20,100
+kacang rebus,camilan,1 porsi,100,160
+kacang goreng,camilan,1 genggam,30,180
+pisang goreng,camilan,1 buah,50,120
+bakwan jagung,camilan,1 buah,50,130
+bala-bala,camilan,1 buah,50,125
+gehu,camilan,1 buah,50,110
+cilok bumbu kacang,camilan,1 porsi,100,220
+siomay bandung,camilan,1 porsi,150,300
+batagor,camilan,1 porsi,150,350
