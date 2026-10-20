@@ -203,12 +203,58 @@ def baca_makanan_csv():
       for baris in reader:
         daftar.append({
             "nama": baris["name"].strip(),
+            "kategori": baris["category"].strip(),
             "porsi": baris["serving_label"].strip(),
             "kalori": float(baris["kcal_per_serving"]),
         })
   except FileNotFoundError:
     pass
   return daftar
+
+
+def kategori_rekomendasi(item):
+  nama = item["nama"].lower()
+  kategori = item["kategori"].lower()
+
+  if kategori == "minuman":
+    return "Minuman"
+
+  kata_junk_food = (
+      "goreng",
+      "krispi",
+      "geprek",
+      "instan",
+      "boba",
+      "martabak",
+      "keripik",
+      "kerupuk",
+      "sosis",
+      "nugget",
+      "es campur",
+      "es teler",
+      "bakwan",
+      "bala-bala",
+      "cireng",
+      "batagor",
+      "risoles",
+      "pastel",
+      "onde-onde",
+      "klepon",
+      "roti bakar",
+      "seblak",
+      "baso aci",
+  )
+  if any(kata in nama for kata in kata_junk_food):
+    return "Junk food"
+
+  kata_sehat = ("rebus", "bakar", "pepes", "pindang", "kukus")
+  if kategori in ("buah", "sayur") or any(kata in nama for kata in kata_sehat):
+    return "Makanan sehat"
+
+  if nama in ("nasi merah", "nasi hitam"):
+    return "Makanan sehat"
+
+  return "Lainnya"
 
 
 def cari_makanan(keyword, daftar_makanan):
@@ -336,12 +382,40 @@ def main():
         print(f"Status : BELUM CUKUP (Sisa kurang {sisa} kkal)")
 
         if daftar_makanan:
-          print("\nRekomendasi makanan yang muat di sisa kalorimu:")
+          print("\nPilih kategori rekomendasi:")
+          print("1. Makanan sehat")
+          print("2. Junk food")
+          print("3. Minuman")
+          print("4. Makanan lainnya")
+          print("5. Semua kategori")
+          pilihan_kategori = input("Pilih kategori (1-5): ").strip()
+          kategori_dipilih = {
+              "1": "Makanan sehat",
+              "2": "Junk food",
+              "3": "Minuman",
+              "4": "Lainnya",
+              "5": None,
+          }.get(pilihan_kategori)
+
+          if pilihan_kategori not in ("1", "2", "3", "4", "5"):
+            print("Pilihan kategori tidak valid.")
+            continue
+
+          print("\nRekomendasi yang muat di sisa kalorimu:")
           cocok = []
           for m in daftar_makanan:
-            if m["kalori"] <= sisa + 50:
+            kategori_item = kategori_rekomendasi(m)
+            if (
+                m["kalori"] <= sisa + 50
+                and (
+                    kategori_dipilih is None
+                    or kategori_item == kategori_dipilih
+                )
+            ):
               item_baru = {
                   "nama": m["nama"],
+                  "kategori": kategori_item,
+                  "kategori_asli": m["kategori"],
                   "porsi": m["porsi"],
                   "kalori": m["kalori"],
                   "selisih": abs(sisa - m["kalori"]),
@@ -350,10 +424,19 @@ def main():
 
           cocok.sort(key=atur_urutan_rekomendasi)
 
+          if not cocok:
+            print(
+                "Belum ada rekomendasi pada kategori ini yang sesuai "
+                "sisa kalori."
+            )
+
           i = 0
           for r in cocok:
             if i < 3:
-              print(f"- {r['nama']} ({r['porsi']}) = {r['kalori']} kkal")
+              print(
+                  f"- {r['nama']} [{r['kategori']} / {r['kategori_asli']}] "
+                  f"({r['porsi']}) = {r['kalori']} kkal"
+              )
               i = i + 1
             else:
               break
