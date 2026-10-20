@@ -3,11 +3,12 @@ from datetime import date, datetime, timedelta
 import json
 
 
-# ==== FUNGSI DAN PERHITUNGAN ====
+# ==========================================
+# FUNGSI DASAR & PERHITUNGAN KALORI
+# ==========================================
 
 
 def hitung_bmr(gender, berat, tinggi, umur):
-  # Menghitung BMR dengan rumus Mifflin-St Jeor
   if gender == "pria":
     return (10 * berat) + (6.25 * tinggi) - (5 * umur) + 5.0
   else:
@@ -28,16 +29,14 @@ def hitung_target(profil):
   elif profil["aktivitas"] == "berat":
     tdee = bmr * 1.725
   else:
-    tdee = bmr * 1.9 
-
+    tdee = bmr * 1.9
 
   if profil["tujuan"] == "turun":
     target = tdee - 500
   elif profil["tujuan"] == "naik":
     target = tdee + 500
   else:
-    target = tdee 
-
+    target = tdee
 
   if target < bmr:
     target = bmr
@@ -45,7 +44,9 @@ def hitung_target(profil):
   return round(target)
 
 
-# ==== BACA DAN SIMPAN DATA PROFIL ====
+# ==========================================
+# BACA DAN SIMPAN PROFIL & CATATAN
+# ==========================================
 
 
 def muat_profil():
@@ -62,8 +63,20 @@ def simpan_profil(profil):
 
 
 def minta_profil_baru():
-  """Meminta data diri dari pengguna lewat terminal."""
   print("\n--- SILAKAN ISI DATA DIRI ---")
+
+  # Tampilkan profil lama jika ada
+  profil_lama = muat_profil()
+  if profil_lama is not None:
+    print("Data Profil Anda Saat Ini:")
+    print(f"- Gender    : {profil_lama['gender']}")
+    print(f"- Umur      : {profil_lama['umur']} tahun")
+    print(f"- Berat     : {profil_lama['berat']} kg")
+    print(f"- Tinggi    : {profil_lama['tinggi']} cm")
+    print(f"- Aktivitas : {profil_lama['aktivitas']}")
+    print(f"- Tujuan    : {profil_lama['tujuan']}")
+    print("---------------------------------")
+    print("Masukkan data baru di bawah ini:")
 
   while True:
     gender = input("Gender (pria / wanita): ").strip().lower()
@@ -74,21 +87,27 @@ def minta_profil_baru():
   while True:
     try:
       umur = int(input("Umur (tahun): "))
-      break
+      if 10 <= umur <= 100:
+        break
+      print("Umur tidak valid! Masukkan antara 10 sampai 100 tahun.")
     except ValueError:
       print("Harus berupa angka bulat!")
 
   while True:
     try:
       berat = float(input("Berat badan (kg): ").replace(",", "."))
-      break
+      if 20 <= berat <= 300:
+        break
+      print("Berat badan harus antara 20 sampai 300 kg.")
     except ValueError:
       print("Harus berupa angka!")
 
   while True:
     try:
       tinggi = float(input("Tinggi badan (cm): ").replace(",", "."))
-      break
+      if 100 <= tinggi <= 250:
+        break
+      print("Tinggi badan harus antara 100 sampai 250 cm.")
     except ValueError:
       print("Harus berupa angka!")
 
@@ -98,9 +117,24 @@ def minta_profil_baru():
   print("3. sedang")
   print("4. berat")
   print("5. sangat_berat")
-  aktivitas = input("Ketik pilihan aktivitas: ").strip().lower()
 
-  tujuan = input("Tujuan (turun / jaga / naik): ").strip().lower()
+  while True:
+    aktivitas = input("Ketik pilihan aktivitas: ").strip().lower()
+    if aktivitas in [
+        "sangat_ringan",
+        "ringan",
+        "sedang",
+        "berat",
+        "sangat_berat",
+    ]:
+      break
+    print("Pilihan aktivitas tidak sesuai daftar! Ketik sesuai teks di atas.")
+
+  while True:
+    tujuan = input("Tujuan (turun / jaga / naik): ").strip().lower()
+    if tujuan in ["turun", "jaga", "naik"]:
+      break
+    print("Pilihan tujuan salah! Ketik: turun, jaga, atau naik.")
 
   profil = {
       "gender": gender,
@@ -156,11 +190,12 @@ def hapus_catatan_hari_ini(indeks):
   return False
 
 
-# ==== BACA DATASET MAKANAN CSV ====
+# ==========================================
+# BACA DATASET MAKANAN CSV
+# ==========================================
 
 
 def baca_makanan_csv():
-  """Membaca file makanan.csv."""
   daftar = []
   try:
     with open("makanan.csv", "r") as f:
@@ -185,15 +220,20 @@ def cari_makanan(keyword, daftar_makanan):
   return hasil
 
 
+def atur_urutan_rekomendasi(item):
+  return item["selisih"]
 
-# ==== MAIN PROGRAM ====
+
+# ==========================================
+# MAIN PROGRAM
+# ==========================================
+
 
 def main():
   print("==================================")
   print("     KALKULATOR KALORI SEDERHANA  ")
   print("==================================")
 
-  # Cek profil
   profil = muat_profil()
   if profil is None:
     print("Belum ada profil. Mari buat dulu.")
@@ -207,12 +247,15 @@ def main():
     semua_data = muat_catatan()
     hari_ini = str(date.today())
     catatan_hari_ini = semua_data.get(hari_ini, [])
-    total_kalori = sum(item["kalori"] for item in catatan_hari_ini)
+
+    total_kalori = 0
+    for item in catatan_hari_ini:
+      total_kalori = total_kalori + item["kalori"]
 
     print("\n----------------------------------")
     print(f"Tanggal  : {date.today().strftime('%d-%m-%Y')}")
     print(f"Target   : {target} kkal")
-    print(f"Tercatat : {total_kalori:g} kkal")
+    print(f"Tercatat : {total_kalori} kkal")
     print("----------------------------------")
     print("1. Catat Makanan")
     print("2. Lihat Catatan Hari Ini")
@@ -235,8 +278,10 @@ def main():
 
       if hasil:
         print("\nHasil Pencarian:")
-        for i, m in enumerate(hasil, 1):
-          print(f"{i}. {m['nama']} ({m['porsi']}) — {m['kalori']:g} kkal")
+        i = 1
+        for m in hasil:
+          print(f"{i}. {m['nama']} ({m['porsi']}) — {m['kalori']} kkal")
+          i = i + 1
 
         pilih_no = input("Pilih nomor (0 untuk manual): ").strip()
         if pilih_no.isdigit() and int(pilih_no) > 0:
@@ -265,45 +310,64 @@ def main():
 
       if item_terpilih and kalori_final > 0:
         simpan_catatan_baru(item_terpilih, porsi_final, kalori_final)
-        print(f"Berhasil mencatat: {item_terpilih} ({kalori_final:g} kkal)")
+        print(f"Berhasil mencatat: {item_terpilih} ({kalori_final} kkal)")
 
     elif pilihan == "2":
       print("\n--- CATATAN HARI INI ---")
       if not catatan_hari_ini:
         print("Belum ada catatan hari ini.")
       else:
-        print("Jam    Nama Makanan          Porsi    Kalori")
+        print("Jam   Nama Makanan            Porsi    Kalori")
         for c in catatan_hari_ini:
           print(
-              f"{c['jam']}    {c['nama']:<20} {c['porsi']:<8g} {c['kalori']:g}"
+              f"{c['jam']}   {c['nama']} ({c['porsi']} porsi) = {c['kalori']}"
               " kkal"
           )
-        print(f"\nTotal: {total_kalori:g} kkal")
+        print(f"\nTotal: {total_kalori} kkal")
 
     elif pilihan == "3":
       print("\n--- CEK KECUKUPAN ---")
       sisa = target - total_kalori
       print(f"Target : {target} kkal")
-      print(f"Masuk  : {total_kalori:g} kkal")
+      print(f"Masuk  : {total_kalori} kkal")
       if sisa <= 0:
-        print(f"Status : CUKUP (Kelebihan {-sisa:g} kkal)")
+        print(f"Status : CUKUP (Kelebihan {-sisa} kkal)")
       else:
-        print(f"Status : BELUM CUKUP (Sisa kurang {sisa:g} kkal)")
+        print(f"Status : BELUM CUKUP (Sisa kurang {sisa} kkal)")
 
         if daftar_makanan:
           print("\nRekomendasi makanan yang muat di sisa kalorimu:")
-          cocok = [m for m in daftar_makanan if m["kalori"] <= sisa + 50]
-          cocok.sort(key=lambda x: abs(sisa - x["kalori"]))
-          for r in cocok[:3]:
-            print(f"- {r['nama']} ({r['porsi']}) = {r['kalori']:g} kkal")
+          cocok = []
+          for m in daftar_makanan:
+            if m["kalori"] <= sisa + 50:
+              item_baru = {
+                  "nama": m["nama"],
+                  "porsi": m["porsi"],
+                  "kalori": m["kalori"],
+                  "selisih": abs(sisa - m["kalori"]),
+              }
+              cocok.append(item_baru)
+
+          cocok.sort(key=atur_urutan_rekomendasi)
+
+          i = 0
+          for r in cocok:
+            if i < 3:
+              print(f"- {r['nama']} ({r['porsi']}) = {r['kalori']} kkal")
+              i = i + 1
+            else:
+              break
 
     elif pilihan == "4":
       print("\n--- HAPUS CATATAN ---")
       if not catatan_hari_ini:
         print("Tidak ada catatan hari ini untuk dihapus.")
       else:
-        for i, c in enumerate(catatan_hari_ini, 1):
-          print(f"{i}. {c['jam']} - {c['nama']} ({c['kalori']:g} kkal)")
+        i = 1
+        for c in catatan_hari_ini:
+          print(f"{i}. {c['jam']} - {c['nama']} ({c['kalori']} kkal)")
+          i = i + 1
+
         try:
           n = int(input("Nomor yang mau dihapus (0 batal): "))
           if n > 0 and hapus_catatan_hari_ini(n - 1):
@@ -326,17 +390,18 @@ def main():
         tgl_str = str(tgl)
         if tgl_str in semua_data:
           ada = True
-          tot = sum(x["kalori"] for x in semua_data[tgl_str])
+          tot = 0
+          for x in semua_data[tgl_str]:
+            tot = tot + x["kalori"]
+
           status = "CUKUP" if tot >= target else "KURANG"
-          print(f"{tgl.strftime('%d-%m-%Y')} : {tot:g} kkal [{status}]")
+          print(f"{tgl.strftime('%d-%m-%Y')} : {tot} kkal [{status}]")
       if not ada:
         print("Belum ada riwayat.")
 
     elif pilihan == "0":
       print("Sampai jumpa!")
       break
-    else:
-      print("Pilihan tidak valid, coba lagi.")
 
 
 if __name__ == "__main__":
