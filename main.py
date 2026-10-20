@@ -1,6 +1,10 @@
 import csv
 from datetime import date, datetime, timedelta
 import json
+from pathlib import Path
+
+
+DATA_DIR = Path(__file__).resolve().parent
 
 
 # ==========================================
@@ -51,14 +55,14 @@ def hitung_target(profil):
 
 def muat_profil():
   try:
-    with open("profil.json", "r") as f:
+    with open(DATA_DIR / "profil.json", "r") as f:
       return json.load(f)
   except FileNotFoundError:
     return None
 
 
 def simpan_profil(profil):
-  with open("profil.json", "w") as f:
+  with open(DATA_DIR / "profil.json", "w") as f:
     json.dump(profil, f, indent=2)
 
 
@@ -151,7 +155,7 @@ def minta_profil_baru():
 
 def muat_catatan():
   try:
-    with open("catatan.json", "r") as f:
+    with open(DATA_DIR / "catatan.json", "r") as f:
       return json.load(f)
   except FileNotFoundError:
     return {}
@@ -174,7 +178,7 @@ def simpan_catatan_baru(nama, porsi, kalori):
 
   semua_data[hari_ini].append(catatan_baru)
 
-  with open("catatan.json", "w") as f:
+  with open(DATA_DIR / "catatan.json", "w") as f:
     json.dump(semua_data, f, indent=2)
 
 
@@ -184,7 +188,7 @@ def hapus_catatan_hari_ini(indeks):
 
   if hari_ini in semua_data and 0 <= indeks < len(semua_data[hari_ini]):
     semua_data[hari_ini].pop(indeks)
-    with open("catatan.json", "w") as f:
+    with open(DATA_DIR / "catatan.json", "w") as f:
       json.dump(semua_data, f, indent=2)
     return True
   return False
@@ -198,7 +202,7 @@ def hapus_catatan_hari_ini(indeks):
 def baca_makanan_csv():
   daftar = []
   try:
-    with open("makanan.csv", "r") as f:
+    with open(DATA_DIR / "makanan.csv", "r") as f:
       reader = csv.DictReader(f)
       for baris in reader:
         daftar.append({
@@ -488,4 +492,6 @@ def main():
 
 
 if __name__ == "__main__":
-  main()
+  from gui_app import launch
+
+  launch()

@@ -1,8 +1,8 @@
 {
-  "gender": "wanita",
+  "gender": "pria",
   "umur": 50,
   "berat": 45.0,
   "tinggi": 150.0,
-  "aktivitas": "ringan",
+  "aktivitas": "sangat_ringan",
   "tujuan": "naik"
 }
